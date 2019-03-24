@@ -1,0 +1,38 @@
+<!-- Generated template for the OptionsComponent component -->
+<ion-item-group no-lines>
+    <ion-item-divider color="light"><ion-label>Show</ion-label></ion-item-divider>
+    <ion-item>
+        <ion-label>Done</ion-label>
+        <ion-toggle [(ngModel)]="listOptions.showDone" (ionChange)="close()"></ion-toggle>
+    </ion-item>
+    <ion-item>
+        <ion-label>Active</ion-label>
+        <ion-toggle [(ngModel)]="listOptions.showActive" (ionChange)="close()"></ion-toggle>
+    </ion-item>
+    <ion-item>
+        <ion-label>Categories</ion-label>
+        <ion-toggle [(ngModel)]="listOptions.showCategories" (ionChange)="close()"></ion-toggle>
+    </ion-item>
+    <ion-item-divider color="light"><ion-label>Search in</ion-label></ion-item-divider>
+    <ion-item>
+        <ion-label>Active</ion-label>
+        <ion-toggle [(ngModel)]="listOptions.searchInActive" (ionChange)="close()"></ion-toggle>
+    </ion-item>
+    <ion-item>
+        <ion-label>Done</ion-label>
+        <ion-toggle [(ngModel)]="listOptions.searchInDone" (ionChange)="close()"></ion-toggle>
+    </ion-item>
+    <ion-item-divider color="light"><ion-label>Sort by</ion-label></ion-item-divider>
+    <ion-list [(ngModel)]="currentSortField">
+<ion-radio-group>
+        <ion-item>
+            <ion-label>Name</ion-label>
+            <ion-radio slot="start" value="name" (ionSelect)="sortChanged()"></ion-radio>
+        </ion-item>
+        <ion-item>
+            <ion-label>Custom</ion-label>
+            <ion-radio slot="start" value="order" (ionSelect)="sortChanged()"></ion-radio>
+        </ion-item>
+    </ion-radio-group>
+</ion-list>
+</ion-item-group>

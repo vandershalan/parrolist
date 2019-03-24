@@ -1,18 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <button ion-button icon-only menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-menu-toggle>
+      <ion-button icon-only>
+        <ion-icon name="menu"></ion-icon>
+      </ion-button>
+    </ion-menu-toggle>
     <ion-title>
-      {{item.name}}
+      {{currentlist.name}}
     </ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="goToCategoriesPage()">
+    <ion-buttons slot="primary">
+      <ion-button icon-only (click)="goToCategoriesPage()">
         <ion-icon name="paper" padding-right></ion-icon>
-      </button>
-      <button ion-button icon-only (click)="showOptionsPopover($event)">
+      </ion-button>
+      <ion-button icon-only (click)="showOptionsPopover($event)">
         <ion-icon name="more"></ion-icon>
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -22,9 +27,9 @@
   <ion-row align-items-center nowrap padding-top margin-bottom>
     <ion-searchbar [(ngModel)]="searchValue" no-padding padding-right>
     </ion-searchbar>
-    <button id="searchAddButton" ion-button icon-only (click)="goToNewItemPage()">
+    <ion-button id="searchAddButton" icon-only (click)="goToNewItemPage()">
       <ion-icon name="add"></ion-icon>
-    </button>
+    </ion-button>
   </ion-row>
 
   <ion-list>
@@ -36,45 +41,45 @@
 
       <ion-item-divider *ngIf="listOptions.showCategories && (isCategoryChanged(i, itmWC.category?.name) && (i > 0 || CATEGORY_WITHOUT_CATEGORY_NAME != itmWC.category?.name))" color="light" margin-top text-uppercase>
         <!--<ion-icon name="cos" item-start></ion-icon>-->
-        {{itmWC.category?.name}}
+        <ion-label>{{itmWC.category?.name}}</ion-label>
       </ion-item-divider>
 
       <ng-container *ngIf="itmWC.item.active && (listOptions.showActive || (listOptions.searchInActive && searchValue))">
         <!--<ion-item-sliding (ionDrag)="doActionIfSwipeIsEnough($event, itm)">-->
         <ion-item-sliding>
-          <ion-item *ngIf="itmWC.item.type == 'list'" (click)="goToItemsListPage(itmWC.item)">
+          <ion-item *ngIf="itmWC.item.type == 'list'" (click)="goToHomePage(itmWC.item.listRef, itmWC.item.name)">
             <ion-icon name="list" item-start></ion-icon>
-            {{itmWC.item.name}}
+            <ion-label>{{itmWC.item.name}}</ion-label>
           </ion-item>
           <ion-item *ngIf="itmWC.item.type != 'list'">
             <ion-icon name="pricetag" item-start></ion-icon>
-            {{itmWC.item.name}}
-            <button ion-button default color="light" (click)="markAsDone(itmWC.item)" item-end>
+            <ion-label>{{itmWC.item.name}}</ion-label>
+            <ion-button default color="light" (click)="markAsDone(itmWC.item)" item-end>
               <ion-icon class="ion-icon-done" name="checkmark"></ion-icon>
-            </button>
+            </ion-button>
           </ion-item>
-          <ion-item-options *ngIf="itmWC.item.type != 'list'" side="left" (ionSwipe)="markAsDone(itmWC.item)">
-            <button ion-button (click)="markAsDone(itmWC.item)">Done</button>
+          <ion-item-options *ngIf="itmWC.item.type != 'list'" side="start" (ionSwipe)="markAsDone(itmWC.item)">
+            <ion-button (click)="markAsDone(itmWC.item)">Done</ion-button>
           </ion-item-options>
-          <ion-item-options side="right">
-            <button ion-button color="danger" (click)="removeItem(itmWC.item)">Remove</button>
-            <button ion-button (click)="goToEditItemPage(itmWC)">Edit</button>
+          <ion-item-options side="end">
+            <ion-button color="danger" (click)="removeItem(itmWC.item)">Remove</ion-button>
+            <ion-button (click)="goToEditItemPage(itmWC)">Edit</ion-button>
           </ion-item-options>
         </ion-item-sliding>
       </ng-container>
 
       <ion-item-sliding *ngIf="!itmWC.item.active && (listOptions.showDone || (listOptions.searchInDone && searchValue))">
-        <ion-item class="item-done" (click)="goToItemsListPage(itmWC.item)">
+        <ion-item class="item-done" (click)="goToHomePage(itmWC.item.listRef, itmWC.item.name)">
           <ion-icon *ngIf="itmWC.item.type == 'list'" name="list" item-start></ion-icon>
           <ion-icon *ngIf="itmWC.item.type != 'list'" name="pricetag" item-start></ion-icon>
-          {{itmWC.item.name}}
-          <button ion-button default color="light" (click)="markAsActive(itmWC.item)" item-end>
+          <ion-label>{{itmWC.item.name}}</ion-label>
+          <ion-button default color="light" (click)="markAsActive(itmWC.item)" item-end>
             <ion-icon class="ion-icon-add" name="add"></ion-icon>
-          </button>
+          </ion-button>
         </ion-item>
-        <ion-item-options side="right">
-          <button ion-button color="danger" (click)="removeItem(itmWC.item)">Remove</button>
-          <button ion-button (click)="goToEditItemPage(itmWC)">Edit</button>
+        <ion-item-options side="end">
+          <ion-button color="danger" (click)="removeItem(itmWC.item)">Remove</ion-button>
+          <ion-button (click)="goToEditItemPage(itmWC)">Edit</ion-button>
         </ion-item-options>
       </ion-item-sliding>
 

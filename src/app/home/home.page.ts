@@ -8,6 +8,7 @@ import {Subscription} from 'rxjs';
 import {DiacriticsRemoval} from '../utils/DiacriticsRemoval';
 import {ItemWithCategory} from '../../models/itemWithCategory';
 import {ActivatedRoute, Router} from '@angular/router';
+import {List} from '../../models/list';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,8 @@ export class HomePage implements OnInit {
   items: Item[] = [];
   itemsWithCategory: ItemWithCategory[] = [];
   categories: Category[] = [];
-  item: Item;
+  // item: Item;
+  currentlist: List = new List('ROOT', 'parrolist');
   CATEGORY_WITHOUT_CATEGORY_NAME = Category.WITHOUT_CATEGORY_NAME;
 
   private categoriesSubscription: Subscription;
@@ -48,19 +50,19 @@ export class HomePage implements OnInit {
   ngOnInit() {
     console.log('ngOnInit');
 
-    const itemId = this.activatedRoute.snapshot.paramMap.get('itemId');
+    const listId = this.activatedRoute.snapshot.paramMap.get('listId');
+    const listName = this.activatedRoute.snapshot.paramMap.get('listName');
 
-    console.log('itemId: ' + itemId);
+    console.log('listId: ' + listId);
 
-    if (itemId) {
-
-    } else {
-      this.item = new Item('homorgList', 'Root list', ItemType.List);
-      this.item.listRef = 'ROOT';
-      this.item.id = 'ROOT';
+    if (listId) {
+      this.currentlist.id = listId;
+    }
+    if (listName) {
+      this.currentlist.name = listName;
     }
 
-    const fireCurrentListPath = HomePage.fireAllListsPath + '/' + this.item.listRef;
+    const fireCurrentListPath = HomePage.fireAllListsPath + '/' + this.currentlist.id;
     const fireCurrentListItemsPath = fireCurrentListPath + '/items';
     const fireCurrentListCategoriesPath = fireCurrentListPath + '/categories';
 
@@ -144,8 +146,9 @@ export class HomePage implements OnInit {
   }
 
 
-  goToHomePage(item) {
-    this.router.navigateByUrl('HomePage', item);
+  goToHomePage(listId, listName) {
+    console.log('goToHomePage', listId, listName);
+    this.router.navigate(['home', listId, listName]);
   }
 
 
@@ -171,7 +174,7 @@ export class HomePage implements OnInit {
 
   doActionIfSwipeIsEnough(slidingItem, item) {
     // if (slidingItem.getOpenAmount() < -50) {
-    if (slidingItem.getSlidingPercent() < -1.1) {
+    if (slidingItem.getSlidingRatio() < -1.1) {
       this.markAsDone(item);
     }
   }
