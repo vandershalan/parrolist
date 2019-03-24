@@ -1,6 +1,8 @@
 import {NgModule} from '@angular/core';
 import {ItemsListOptionsComponent} from './itemsListOptions';
-import {RouterModule} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {IonicModule} from '@ionic/angular';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -8,7 +10,9 @@ import {RouterModule} from '@angular/router';
         ItemsListOptionsComponent
     ],
     imports: [
-        RouterModule.forChild([{component: ItemsListOptionsComponent}])
+        IonicModule,
+        CommonModule,
+        FormsModule
     ],
     entryComponents: [
         ItemsListOptionsComponent

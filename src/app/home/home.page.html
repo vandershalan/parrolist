@@ -69,10 +69,10 @@
       </ng-container>
 
       <ion-item-sliding *ngIf="!itmWC.item.active && (listOptions.showDone || (listOptions.searchInDone && searchValue))">
-        <ion-item class="item-done" (click)="goToHomePage(itmWC.item.listRef, itmWC.item.name)">
+        <ion-item color="secondary" (click)="goToHomePage(itmWC.item.listRef, itmWC.item.name)">
           <ion-icon *ngIf="itmWC.item.type == 'list'" name="list" item-start></ion-icon>
           <ion-icon *ngIf="itmWC.item.type != 'list'" name="pricetag" item-start></ion-icon>
-          <ion-label>{{itmWC.item.name}}</ion-label>
+          <ion-label color="secondary" class="item-done">{{itmWC.item.name}}</ion-label>
           <ion-button default color="light" (click)="markAsActive(itmWC.item)" item-end>
             <ion-icon class="ion-icon-add" name="add"></ion-icon>
           </ion-button>

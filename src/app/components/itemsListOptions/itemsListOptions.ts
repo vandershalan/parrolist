@@ -5,6 +5,7 @@ import {NavParams, PopoverController} from '@ionic/angular';
 
 @Component({
     selector: 'items-list-options',
+    styleUrls: ['itemsListOptions.scss'],
     templateUrl: 'itemsListOptions.html'
 })
 export class ItemsListOptionsComponent {
@@ -15,6 +16,7 @@ export class ItemsListOptionsComponent {
     constructor(public popoverCtrl: PopoverController, navParams: NavParams) {
         this.listOptions = navParams.get('listOptions');
         this.currentSortField = this.listOptions.sortField;
+        // console.log(this.currentSortField);
     }
 
 
@@ -30,6 +32,6 @@ export class ItemsListOptionsComponent {
 
 
     close() {
-        this.popoverCtrl.dismiss({listOptions: this.listOptions});
+        this.popoverCtrl.dismiss();
     }
 }

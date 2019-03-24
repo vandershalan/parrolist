@@ -9,6 +9,7 @@ import {DiacriticsRemoval} from '../utils/DiacriticsRemoval';
 import {ItemWithCategory} from '../../models/itemWithCategory';
 import {ActivatedRoute, Router} from '@angular/router';
 import {List} from '../../models/list';
+import {ItemsListOptionsComponent} from '../components/itemsListOptions/itemsListOptions';
 
 @Component({
   selector: 'app-home',
@@ -132,15 +133,19 @@ export class HomePage implements OnInit {
   }
 
 
-  async showOptionsPopover(myEvent) {
-    const popover = await this.popoverCtrl.create({component: 'ItemsListOptionsComponent',
-      componentProps: this.listOptions, translucent: true});
-
-    popover.onDidDismiss().then((optionsData) => {
-      if (optionsData) {
-        this.listOptions = optionsData.data.listOptions;
-      }
+  async showOptionsPopover(event) {
+    const popover = await this.popoverCtrl.create({
+      component: ItemsListOptionsComponent,
+      event: event,
+      componentProps: {listOptions: this.listOptions},
+      translucent: false
     });
+
+    // popover.onDidDismiss().then((optionsData) => {
+    //   if (optionsData) {
+    //     this.listOptions = optionsData.data.listOptions;
+    //   }
+    // });
 
     await popover.present();
   }

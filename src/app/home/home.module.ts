@@ -6,12 +6,14 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import {PipesModule} from '../pipes/pipes.module';
+import {ItemsListOptionsModule} from '../components/itemsListOptions/itemsListOptions.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ItemsListOptionsModule,
     RouterModule.forChild([
       {
         path: '',
