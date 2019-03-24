@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AlertController, NavController, NavParams, PopoverController, Events} from '@ionic/angular';
+import {AlertController, PopoverController, Events} from '@ionic/angular';
 import {AngularFireDatabase, AngularFireList} from 'angularfire2/database';
 import {ListOptions} from '../../models/listOptions';
 import {Item, ItemType} from '../../models/item';
@@ -7,7 +7,7 @@ import {Category} from '../../models/category';
 import {Subscription} from 'rxjs';
 import {DiacriticsRemoval} from '../utils/DiacriticsRemoval';
 import {ItemWithCategory} from '../../models/itemWithCategory';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -39,13 +39,27 @@ export class HomePage implements OnInit {
 
   rd = (val) => typeof val === 'string' ? DiacriticsRemoval.removeDiacritics(val.toLowerCase()) : val;
 
-  constructor(public router: Router, public navParams: NavParams, public alertCtrl: AlertController,
+  constructor(public router: Router, private activatedRoute: ActivatedRoute, public alertCtrl: AlertController,
               public afDatabase: AngularFireDatabase, public popoverCtrl: PopoverController, public events: Events) {
-    this.item = navParams.data;
+    console.log('constructor');
   }
 
 
   ngOnInit() {
+    console.log('ngOnInit');
+
+    const itemId = this.activatedRoute.snapshot.paramMap.get('itemId');
+
+    console.log('itemId: ' + itemId);
+
+    if (itemId) {
+
+    } else {
+      this.item = new Item('homorgList', 'Root list', ItemType.List);
+      this.item.listRef = 'ROOT';
+      this.item.id = 'ROOT';
+    }
+
     const fireCurrentListPath = HomePage.fireAllListsPath + '/' + this.item.listRef;
     const fireCurrentListItemsPath = fireCurrentListPath + '/items';
     const fireCurrentListCategoriesPath = fireCurrentListPath + '/categories';
@@ -116,17 +130,17 @@ export class HomePage implements OnInit {
   }
 
 
-  showOptionsPopover(myEvent) {
-    const popover = this.popoverCtrl.create('ItemsListOptionsComponent', {listOptions: this.listOptions});
-    popover.onDidDismiss((optionsData) => {
+  async showOptionsPopover(myEvent) {
+    const popover = await this.popoverCtrl.create({component: 'ItemsListOptionsComponent',
+      componentProps: this.listOptions, translucent: true});
+
+    popover.onDidDismiss().then((optionsData) => {
       if (optionsData) {
-        this.listOptions = optionsData.listOptions;
-        // this.listOptions = Object.assign({}, optionsData.listOptions);
+        this.listOptions = optionsData.data.listOptions;
       }
     });
-    popover.present({
-      ev: myEvent
-    });
+
+    await popover.present();
   }
 
 
@@ -137,21 +151,21 @@ export class HomePage implements OnInit {
 
   goToNewItemPage() {
     // if (this.searchValue == null) this.searchValue = '';
-    this.router.navigateByUrl('NewItemPage/${itemName: this.searchValue, dbAllLists: this.dbAllLists,
-          dbCurrentItemList: this.dbCurrentItemList, dbCategories: this.dbCategories});
+    // this.router.navigateByUrl('NewItemPage/${itemName:' this.searchValue,
+    // dbAllLists: this.dbAllLists, dbCurrentItemList: this.dbCurrentItemList, dbCategories: this.dbCategories});
   }
 
 
   goToEditItemPage(itemWC: ItemWithCategory) {
-    this.navCtrl.push('EditItemPage',
-        {itemWithCategory: itemWC, dbAllLists: this.dbAllLists, dbCurrentItemList: this.dbCurrentItemList,
-          dbCategories: this.dbCategories});
+    // this.navCtrl.push('EditItemPage',
+    //     {itemWithCategory: itemWC, dbAllLists: this.dbAllLists, dbCurrentItemList: this.dbCurrentItemList,
+    //       dbCategories: this.dbCategories});
   }
 
 
   goToCategoriesPage() {
-    this.navCtrl.push('CategoriesListPage', {showRadio: false, categoryId: null, dbCategories: this.dbCategories,
-      dbCurrentItemList: this.dbCurrentItemList});
+    // this.navCtrl.push('CategoriesListPage', {showRadio: false, categoryId: null, dbCategories: this.dbCategories,
+    //   dbCurrentItemList: this.dbCurrentItemList});
   }
 
 
@@ -187,7 +201,7 @@ export class HomePage implements OnInit {
 
   removeItem(item: Item) {
     const alert = this.alertCtrl.create({
-      title: 'Confirm removing',
+      header: 'Confirm removing',
       message: 'Do you really want to remove this item?',
       buttons: [
         {
@@ -205,7 +219,8 @@ export class HomePage implements OnInit {
         }
       ]
     });
-    alert.present();
+    // FIXME do poprawy
+    // alert.present();
   }
 
 
