@@ -1,50 +1,45 @@
-app-home {
-
-  :root {
-    --ion-color-secondary: #006600;
-    --ion-color-secondary-rgb: 0,102,0;
-    --ion-color-secondary-contrast: #ffffff;
-    --ion-color-secondary-contrast-rgb: 255,255,255;
-    --ion-color-secondary-shade: #005a00;
-    --ion-color-secondary-tint: #1a751a;
-  }
+  //ion-item {
+  //  --ion-color-secondary: #006600;
+  //  --ion-color-secondary-rgb: 0,102,0;
+  //  --ion-color-secondary-contrast: #ffffff;
+  //  --ion-color-secondary-contrast-rgb: 255,255,255;
+  //  --ion-color-secondary-shade: #005a00;
+  //  --ion-color-secondary-tint: #1a751a;
+  //}
 
   //.item-divider {
   //  margin-top: 15px;
   //}
 
   //.button-md#searchAddButton {
+
   #searchAddButton {
-    height: 4.2rem;
-    width: 4.7rem;
-    margin: 0px;
+    //font-size: 14px;
+    height: 42px;
+    //width: 42px;
+    //padding: 0px;
+  //  margin: 0px;
+  }
+
+  ion-list {
+    --ion-background-color: transparent;
+  }
+
+  ion-item {
+    --background: #FFF;
   }
 
   .item-done {
     --color: #AAA
   }
 
-  .icon-md.ion-icon-done {
-    font-size: 1.2em;
+  .item-button-done {
+    font-size: 14px;
+    height: 32px;
   }
 
-  //.icon-ios.ion-icon-done {
-  //  font-size: 2em;
-  //}
-
-  .icon-wp.ion-icon-done {
-    font-size: 2em;
+  .item-button-add {
+    font-size: 14px;
+    height: 32px;
+    --ion-color-light: #FFF;
   }
-
-  .icon-md.ion-icon-add {
-    font-size: 1.4em;
-  }
-
-  //.icon-ios.ion-icon-add {
-  //  font-size: 1.8em;
-  //}
-
-  .icon-wp.ion-icon-add {
-    font-size: 1.8em;
-  }
-}
