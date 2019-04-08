@@ -14,15 +14,25 @@
   //.button-md#searchAddButton {
 
   #searchAddButton {
-    //font-size: 14px;
-    height: 42px;
-    //width: 42px;
-    //padding: 0px;
-  //  margin: 0px;
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    height: 100%;
   }
 
   ion-list {
     --ion-background-color: transparent;
+  }
+
+  ion-item-divider ion-label {
+    //font-weight: bold;
+    //height: 30px;
+  }
+
+  .icon-active {
+    color: black;
+    //font-size: 28px;
   }
 
   ion-item {
