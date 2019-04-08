@@ -11,7 +11,7 @@ export class ItemFilterPipe implements PipeTransform {
     transform(itemsWithCategory: ItemWithCategory[], searchValue: string, showActive: boolean, showDone: boolean,
               searchInActive: boolean, searchInDone: boolean): ItemWithCategory[] {
 
-        // console.log("FilterPipe");
+        console.log('FilterPipe');
 
         if (!itemsWithCategory) {
             return [];
