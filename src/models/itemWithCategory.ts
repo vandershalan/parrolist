@@ -3,7 +3,10 @@ import {Item} from './item';
 
 export class ItemWithCategory {
 
-    public item: Item;
     public category: Category;
+
+    constructor(public item: Item) {
+
+    }
 }
 
